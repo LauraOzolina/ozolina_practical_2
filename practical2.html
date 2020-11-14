@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<head>
+    <meta character="utf8">
+    <meta content="text/html;charset=utf-8">
+    <link rel="stylesheet" href="example1.css">
+    <title>Laura Ozoliņa</title>
+</head>
+
+<body>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+
+        void main()
+        {
+            vUv = uv;
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+            gl_Position = projectionMatrix * mvPosition;
+        }
+
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        varying vec2 vUv;
+
+        uniform float time;
+
+        void main()	{
+            float x = mod(time + gl_FragCoord.x, 20.) < 10. ? 1. : 0.;
+            float y = mod(time + gl_FragCoord.y, 20.) < 10. ? 1. : 0.;
+            gl_FragColor = vec4(vec3(min(x, y)), 1.);
+        }
+    </script>
+    <script type="module">
+        import { practical2 } from './practical2.js';
+        practical2();
+    </script>
+</body>
+
+</html>
